@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: backend
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: backend
+    container_name: backend-whydigital
+    restart: unless-stopped
+    depends_on:
+      - db
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - backend_whydigital
+
+  db:
+    image: mysql:5.7
+    container_name: db-whydigital
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: whydigital-db
+      MYSQL_ROOT_PASSWORD: whydigital
+      MYSQL_PASSWORD: whydigital
+      MYSQL_USER: whydigital
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql/dbdata:/var/lib/mysql
+    ports:
+      - "3312:3306"
+    networks:
+      - backend_whydigital
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-whydigital
+    restart: unless-stopped
+    ports:
+      - 8029:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - backend_whydigital
+
+networks:
+  backend_whydigital:
+    driver: bridge
