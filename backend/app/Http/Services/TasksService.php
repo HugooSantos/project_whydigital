@@ -35,6 +35,8 @@ class TasksService
         if (is_null($task)) {
             return $this->taskNotFoundResponse($taskId);
         }
+        
+        $this->authorize('show', $task);
 
         return $this->sucessResponse(
             'Despesa listada com sucesso.',
