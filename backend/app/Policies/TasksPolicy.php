@@ -31,10 +31,10 @@ class TasksPolicy
         return $this->checkUserCanOperate($userModel->id, $taskModel->user_id_task);
     }
 
-    private function checkUserCanOperate(int $userId, int $expenseUserId): Response
+    private function checkUserCanOperate(int $userId, int $taskUserId): Response
     {
-        return $userId == $expenseUserId
+        return $userId == $taskUserId
             ? Response::allow()
-            : Response::deny('Usuário não autorizado a operar essa despesa.', 403);
+            : Response::deny('Usuário não autorizado a operar essa tarefa.', 403);
     }
 }

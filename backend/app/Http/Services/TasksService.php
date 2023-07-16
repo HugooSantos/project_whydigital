@@ -39,7 +39,7 @@ class TasksService
         $this->authorize('show', $task);
 
         return $this->sucessResponse(
-            'Despesa listada com sucesso.',
+            'Tarefa listada com sucesso.',
             new TasksResource($task),
             200
         );
@@ -52,7 +52,7 @@ class TasksService
             ->last();
 
         return $this->sucessResponse(
-            'Despesa criada com sucesso',
+            'Tarefa criada com sucesso',
             new TasksResource($task),
             201
         );
@@ -69,7 +69,7 @@ class TasksService
         $task->update($taskRequest->toArray());
 
         return $this->sucessResponse(
-            'Despesa atualizada com sucesso',
+            'Tarefa atualizada com sucesso',
             new TasksResource($task),
             200
         );
@@ -86,7 +86,7 @@ class TasksService
         $task->delete();
 
         return $this->sucessResponse(
-            'Remoção da despesa feita com sucesso.',
+            'Remoção da tarefa feita com sucesso.',
             new TasksResource($task),
             200
         );
