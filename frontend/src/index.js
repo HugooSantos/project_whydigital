@@ -1,11 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TaskProvider } from './context/task'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { HomePage } from './pages/home'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -23,7 +31,7 @@ root.render(
         pauseOnHover
         theme="light"
       />
-      <App />
+      <RouterProvider router={router} />
       <ToastContainer />
     </TaskProvider>
   </>,

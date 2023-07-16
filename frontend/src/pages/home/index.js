@@ -1,10 +1,9 @@
-import './App.css'
-import { useTask } from './hooks/useTask'
-import Button from './components/Tasks/Button'
+import { useTask } from '../../hooks/useTask'
+import Button from '../../components/Tasks/Button'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-function App() {
+export function HomePage() {
   const [description, setDescription] = useState('')
   const { tasks, removeTask, addTask } = useTask()
   const notify = (message) => toast(message)
@@ -60,5 +59,3 @@ function App() {
     </div>
   )
 }
-
-export default App
