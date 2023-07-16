@@ -5,15 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TaskProvider } from './context/task'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { HomePage } from './pages/home'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-])
+import { RouterProvider } from 'react-router-dom'
+import { router } from './route'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
