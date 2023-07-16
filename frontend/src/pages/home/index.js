@@ -1,7 +1,9 @@
 import { useTask } from '../../hooks/useTask'
+import { logout, useAuth } from '../../hooks/useAuth'
 import Button from '../../components/Tasks/Button'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 export function HomePage() {
   const [description, setDescription] = useState('')
@@ -18,10 +20,30 @@ export function HomePage() {
     }
   }
 
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/')
+    } catch (error) {
+      console.log('ERROU')
+    }
+  }
+
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-slate-800">
-      <div className="flex flex-col justify-center items-center bg-white p-8 rounded-lg gap-4">
-        <h1>Tarefas</h1>
+    <div className="flex flex-col justify-center items-center w-full h-screen bg-slate-800">
+      <div className="flex relative flex-col justify-center items-center bg-white p-8 rounded-lg gap-4 overflow-y-scroll scrollbar-thick scrollbar-thumb-blue-500 scrollbar-track-blue-100">
+        <button
+          onClick={() => {
+            handleLogout()
+          }}
+          className="absolute right-2 top-2 w-12 h-8 bg-red-700 rounded-lg text-white"
+        >
+          Sair
+        </button>
+        <div>Tarefas</div>
         <div className="flex flex-row w-96 h-8 rounded-full border-2 overflow-hidden border-gray-700">
           <input
             value={description}

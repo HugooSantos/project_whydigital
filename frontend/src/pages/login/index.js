@@ -1,30 +1,36 @@
 import { useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsFillKeyFill } from 'react-icons/bs'
+import { useAuth } from '../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 export function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = (email, password) => {
+  const { login } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogin = async (email, password) => {
     try {
-      console.log('logado' + email + 'Password: ' + password)
+      await login(email, password)
+      navigate('/home')
     } catch (error) {
-      console.log('error ao logado')
+      console.log(error)
     }
   }
 
   return (
     <div className="flex justify-center items-center w-full h-screen bg-sky-900">
       <div className="flex flex-col justify-center items-center bg-white p-8 rounded-lg gap-4">
-        <h1>Login</h1>
+        <h1>LOGIN</h1>
         <div className="flex justify-center px-2 items-center flex-row w-72 h-8 rounded-full border-2 overflow-hidden border-gray-700">
           <AiOutlineMail />
           <input
             placeholder={'email'}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-2 outline-none"
+            className="w-full px-2 outline-none "
             maxLength={32}
           ></input>
         </div>
