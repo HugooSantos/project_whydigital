@@ -13,6 +13,8 @@ return new class extends Migration
             $table->string('description_task', 255);
             $table->char('complete_task',1);
             $table->integer('user_id_task');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 
