@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TasksRequest;
 use App\Http\Services\TasksService;
+use Illuminate\Http\JsonResponse;
 
 class TasksController extends Controller
 {
@@ -13,28 +15,29 @@ class TasksController extends Controller
     {
         $this->taskService = new TasksService();
     }
+
     public function index()
     {
         return $this->taskService->index();
     }
 
-    public function show(int $taskId)
-    {   
-        die('a');
-    }
-
-    public function store($tastkRequest)
-    {  
-        die('b');
-    }
-
-    public function update($taskRequest, int $taskId)
+    public function show(int $taskId): JsonResponse
     {
-        die('c');
+        return $this->taskService->show($taskId);
     }
 
-    public function destroy(int $taskId)
+    public function store(TasksRequest $tastkRequest): JsonResponse
     {
-        die('d');
+        return $this->taskService->store($tastkRequest);
+    }
+
+    public function update(TasksRequest $taskRequest, int $taskId): JsonResponse
+    {
+        return $this->taskService->update($taskRequest, $taskId);
+    }
+
+    public function destroy(int $taskId): JsonResponse
+    {
+        return $this->taskService->destroy($taskId);
     }
 }

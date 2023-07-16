@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
-class UserRequest extends FormRequest
+class TasksRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -30,7 +28,7 @@ class UserRequest extends FormRequest
             'description.max' => 'O campo description deve ter no máximo 255 caracteres.',
             'complete.required' => 'O campo complete é obrigatório.',
             'complete.string' => 'O campo complete deve ser uma string.',
-            'complete.max' => 'O campo description deve ter no máximo 1 character.'
+            'complete.max' => 'O campo complete deve ter no máximo 1 character.'
         ];
     }
 
@@ -38,7 +36,8 @@ class UserRequest extends FormRequest
     {
         return [
             'description_task' => $this->description,
-            'complete' => $this->complete
+            'complete_task' => $this->complete ?? "F",
+            'user_id_task' => Auth::User()->id
         ];
     }
 }

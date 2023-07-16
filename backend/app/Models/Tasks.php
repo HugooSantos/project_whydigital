@@ -11,15 +11,12 @@ class Tasks extends Model
     use HasFactory;
 
     protected $table = 'tasks';
-
     public $timestamps = true;
 
     protected $fillable = [
         'description_task',
         'complete_task',
-        'user_id_task',
-        'created_at',
-        'updated_at'
+        'user_id_task'
     ];
 
     public function user(): BelongsTo
