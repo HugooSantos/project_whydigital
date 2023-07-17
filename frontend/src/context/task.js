@@ -9,9 +9,7 @@ export const TaskProvider = ({ children }) => {
   async function addTask(description) {
     try {
       // const { data } = await api.post(`tasks`, {
-      //   data: {
       //     description: description,
-      //   },
       // })
       // const newTask = {
       //   id: data.data.id,

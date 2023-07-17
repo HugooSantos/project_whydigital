@@ -4,9 +4,19 @@ import { HomePage } from '../pages/home'
 import { useAuth } from '../hooks/useAuth'
 
 function Protected({ children }) {
-  const { isLogged } = useAuth()
+  const { logged } = useAuth()
 
-  if (!isLogged) {
+  if (!logged) {
+    return <Navigate to="/login" replace />
+  }
+
+  return children
+}
+
+function Sign({ children }) {
+  const { logged } = useAuth()
+
+  if (logged) {
     return <Navigate to="/" replace />
   }
 
@@ -15,11 +25,15 @@ function Protected({ children }) {
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <LoginPage />,
+    path: '/login',
+    element: (
+      <Sign>
+        <LoginPage />
+      </Sign>
+    ),
   },
   {
-    path: '/home',
+    path: '/',
     element: (
       <Protected isSignedIn={false}>
         <HomePage />

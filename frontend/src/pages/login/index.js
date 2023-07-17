@@ -12,12 +12,8 @@ export function LoginPage() {
   const navigate = useNavigate()
 
   const handleLogin = async (email, password) => {
-    try {
-      await login(email, password)
-      navigate('/home')
-    } catch (error) {
-      console.log(error)
-    }
+    await login(email, password)
+    navigate('/')
   }
 
   return (

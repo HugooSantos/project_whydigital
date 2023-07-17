@@ -24,12 +24,8 @@ export function HomePage() {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
-    try {
-      await logout()
-      navigate('/')
-    } catch (error) {
-      console.log('ERROU')
-    }
+    await logout()
+    navigate('/login')
   }
 
   return (
