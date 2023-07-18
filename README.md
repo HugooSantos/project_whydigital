@@ -22,7 +22,7 @@ cp backend/.env.example .backend/.env
 - Primeiro:
 
 ```
-sudo chmod 755 runProject.sh
+sudo chmod 777 runProject.sh
 ```
 
 - Segundo:
@@ -52,7 +52,7 @@ sudo chmod 755 runProject.sh
 - Primeiro:
 
 ```
-sudo chmod 755 runTests.sh
+sudo chmod 777 runTests.sh
 ```
 
 - Segundo:
