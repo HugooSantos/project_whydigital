@@ -22,6 +22,11 @@ cp backend/.env.example backend/.env
 cd backend ; composer install --ignore-platform-reqs  ; cd ..
 ```
 
+- Em seguida iremos rodar o npm:
+```
+cd frontend ; npm install  ; cd ..
+```
+
 - Vamos dar permissão ao comando sh e executa-lo para subir os containers :
 
 - Primeiro:
