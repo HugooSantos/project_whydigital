@@ -10,7 +10,7 @@ git clone https://github.com/HugooSantos/project_whydigital.git ; cd project_why
 - Dentro da pasta project_whydigital vamos copiar o .env.example do laravel e já fazer as alterações necessárias:
 
 ```
-cp backend/.env.example .backend/.env
+cp backend/.env.example backend/.env
 ```
 
 - Vamos usar o docker e o docker compose como ambiente de desenvolvimento/teste, caso não o tenha instalado você pode baixa-los por aqui (caso a sua distro não seja debian você pode mudar a esquerda para sua distro):
