@@ -16,18 +16,15 @@ root.render(
       <TaskProvider>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
           draggable
-          pauseOnHover
-          theme="light"
+          theme="dark"
         />
         <RouterProvider router={router} />
-        <ToastContainer />
       </TaskProvider>
     </AuthProvider>
   </>,

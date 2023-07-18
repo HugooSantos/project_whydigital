@@ -25,3 +25,6 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 USER $user
+
+RUN php artisan migrate
+RUN php artisan db:seed

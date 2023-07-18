@@ -26,7 +26,8 @@ trait CommonResponseTrait
     protected function emptyTaskResponse(): JsonResponse
     {
         return response()->json([
-            'message' => 'Nenhuma task cadastrada ainda pra esse usuário'
+            'message' => 'Nenhuma task cadastrada ainda pra esse usuário',
+            "data" => []
         ], 404);
     }
 }

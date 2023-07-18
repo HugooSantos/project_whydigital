@@ -1,5 +1,6 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { api } from '../Services/api'
+import { toast } from 'react-toastify'
 
 export const TaskContext = createContext()
 
@@ -8,35 +9,85 @@ export const TaskProvider = ({ children }) => {
 
   async function addTask(description) {
     try {
-      // const { data } = await api.post(`tasks`, {
-      //     description: description,
-      // })
-      // const newTask = {
-      //   id: data.data.id,
-      //   description: data.data.description,
-      //   completed: false,
-      // }
-      setTasks([...tasks, description])
+      const { data } = await api.post(`tasks`, {
+        description,
+      })
+
+      const newTask = {
+        id: data.data.id,
+        description: data.data.description,
+        complete: 'F',
+      }
+
+      setTasks([...tasks, newTask])
     } catch (error) {
-      console.log(String(error))
+      throw new Error(error)
     }
   }
 
-  async function removeTask(item) {
+  async function removeTask(id) {
     try {
-      //   await api.delete(`tasks/${id}`)
+      await api.delete(`tasks/${id}`)
       setTasks(
-        tasks.filter(function (i) {
-          return item !== i
+        tasks.filter(function (item) {
+          return item.id !== id
         }),
       )
     } catch (error) {
-      throw new Error('ERROR')
+      toast(String(error))
+    }
+  }
+
+  async function updateTask(task) {
+    try {
+      const { data } = await api.put(`tasks/${task.id}`, {
+        description: task.description,
+        complete: task.complete === 'F' ? 'T' : 'F',
+      })
+      setTasks(
+        tasks.map(function (item) {
+          if (item.id === task.id) {
+            return {
+              ...item,
+              complete: data.data.complete,
+            }
+          }
+          return item
+        }),
+      )
+    } catch (error) {
+      toast(String(error))
+    }
+  }
+
+  async function getTasks() {
+    try {
+      const { data } = await api.get(`tasks`)
+      const isArray = Array.isArray(data.data)
+      if (!isArray) {
+        setTasks([data.data])
+        return
+      }
+
+      const newData = data.data.map((task) => {
+        return {
+          id: task.id,
+          description: task.description_task,
+          complete: task.complete_task,
+        }
+      })
+      setTasks(newData)
+    } catch (error) {
+      if (error.response.status === 401) {
+        throw new Error(error)
+      }
     }
   }
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, removeTask }}>
+    <TaskContext.Provider
+      value={{ tasks, addTask, updateTask, removeTask, getTasks }}
+    >
       {children}
     </TaskContext.Provider>
   )

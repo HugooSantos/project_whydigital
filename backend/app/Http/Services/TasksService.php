@@ -65,6 +65,7 @@ class TasksService
         if (is_null($task)) {
             return $this->taskNotFoundResponse($taskId);
         }
+        $this->authorize('update', $task);
 
         $task->update($taskRequest->toArray());
 
@@ -82,6 +83,8 @@ class TasksService
         if (is_null($task)) {
             return $this->taskNotFoundResponse($taskId);
         }
+
+        $this->authorize('delete', $task);
 
         $task->delete();
 

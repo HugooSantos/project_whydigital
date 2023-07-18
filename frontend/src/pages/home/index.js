@@ -1,32 +1,69 @@
 import { useTask } from '../../hooks/useTask'
-import { logout, useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 import Button from '../../components/Tasks/Button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 export function HomePage() {
   const [description, setDescription] = useState('')
-  const { tasks, removeTask, addTask } = useTask()
+  const { tasks, removeTask, updateTask, addTask, getTasks } = useTask()
   const notify = (message) => toast(message)
+
+  useEffect(() => {
+    async function iniTask() {
+      try {
+        await getTasks()
+      } catch (e) {
+        handleLogout()
+      }
+    }
+    iniTask()
+  }, [])
 
   const add = async (item) => {
     try {
       await addTask(item)
       setDescription('')
-      notify('ADD')
+      notify('TASK adicionada com sucesso')
     } catch (error) {
-      notify('Erro')
+      handleLogout()
+    }
+  }
+
+  const handleUpdate = async (item) => {
+    try {
+      await updateTask(item)
+      checkOrUncheckTask(item)
+    } catch (error) {
+      handleLogout()
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await removeTask(id)
+      notify('TASK removida')
+    } catch (error) {
+      handleLogout()
     }
   }
 
   const { logout } = useAuth()
-  const navigate = useNavigate()
-
   const handleLogout = async () => {
     await logout()
     navigate('/login')
   }
+
+  const checkOrUncheckTask = (item) => {
+    if (item.complete === 'T') {
+      notify('TASK não concluída')
+      return
+    }
+    notify('TASK concluída')
+  }
+
+  const navigate = useNavigate()
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen bg-slate-800">
@@ -63,10 +100,16 @@ export function HomePage() {
             return (
               <div className="w-full" key={index}>
                 <div className="gap-2 w-full items-center flex flex-row bg-gray-300 rounded-md">
-                  <div className="w-3/4 px-2">{item}</div>
+                  <div className="w-3/4 px-2">{item.description}</div>
                   <div className="w-1/4 flex justify-end flex-row gap-1">
-                    <Button type="reload" />
-                    <Button type="delete" onClick={() => removeTask(item)} />
+                    <Button
+                      onClick={() => handleUpdate(item)}
+                      type={item.complete === 'F' ? 'reload' : 'checker'}
+                    />
+                    <Button
+                      type="delete"
+                      onClick={() => handleDelete(item.id)}
+                    />
                   </div>
                 </div>
               </div>
