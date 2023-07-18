@@ -63,20 +63,7 @@ export const TaskProvider = ({ children }) => {
   async function getTasks() {
     try {
       const { data } = await api.get(`tasks`)
-      const isArray = Array.isArray(data.data)
-      if (!isArray) {
-        setTasks([data.data])
-        return
-      }
-
-      const newData = data.data.map((task) => {
-        return {
-          id: task.id,
-          description: task.description_task,
-          complete: task.complete_task,
-        }
-      })
-      setTasks(newData)
+      setTasks(data.data)
     } catch (error) {
       if (error.response.status === 401) {
         throw new Error(error)

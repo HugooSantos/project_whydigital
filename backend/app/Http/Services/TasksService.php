@@ -8,6 +8,7 @@ use App\Http\Requests\TasksRequest;
 use App\Http\Resources\TasksResource;
 use Illuminate\Http\JsonResponse;
 use App\Models\Tasks;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class TasksService
@@ -23,10 +24,21 @@ class TasksService
             return $this->emptyTaskResponse();
         };
 
+        $tasksToResponse = $this->getArrayOfResourcesTasks($tasks);
+
         return response()->json([
             'message' => 'Todas as tasks desse usuário',
-            'data' => $tasks->toArray(),
+            'data' => $tasksToResponse,
         ], 200);
+    }
+
+    private function getArrayOfResourcesTasks(Collection $tasks): array
+    {
+        $arrayResorces = array();
+        foreach ($tasks as $task) {
+            $arrayResorces[] = new TasksResource($task);
+        }
+        return $arrayResorces;
     }
     public function show(int $taskId): JsonResponse
     {
@@ -35,7 +47,7 @@ class TasksService
         if (is_null($task)) {
             return $this->taskNotFoundResponse($taskId);
         }
-        
+
         $this->authorize('show', $task);
 
         return $this->sucessResponse(
