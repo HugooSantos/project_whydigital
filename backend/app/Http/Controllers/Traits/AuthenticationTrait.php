@@ -35,7 +35,7 @@ trait AuthenticationTrait
     {
         return response()->json([
             'status' => 'error',
-            'message' => 'Falha ao Autenticar',
+            'message' => 'Falha ao Autenticar.',
         ], 401);
     }
 }
