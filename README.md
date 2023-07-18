@@ -17,6 +17,11 @@ cp backend/.env.example backend/.env
 - [docker](https://docs.docker.com/engine/install/debian/) 
 - [docker-compose](https://docs.docker.com/compose/install/) 
 
+- Iremos rodar o composer install:
+```
+cd backend ; composer install ; cd ..
+```
+
 - Vamos dar permissão ao comando sh e executa-lo para subir os containers :
 
 - Primeiro:
@@ -47,18 +52,39 @@ sudo chmod 777 runProject.sh
 <br>
 
 
-- Para executar os testes você pode rodar o sh que já deixei pronto pra isso, primeiro iremos dar permissão e depois você pode executar:
+- Agora faremos algumas coisas dentro do container do backend,
+primeiro vamos adentrar ao container e logo em seguida iremos rodar os comandos:
+
+
+```
+docker exec -it backend-whydigital bash
+```
+
+```
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate --force
+php artisan db:seed
+```
+
+- Para sair digit:
+
+```
+exit
+``` 
+
+- Para executar os testes você pode adentrar ao container e logo em seguida rodar os testes:
 
 - Primeiro:
 
 ```
-sudo chmod 777 runTests.sh
+docker exec -it backend-whydigital bash
 ```
 
 - Segundo:
 
 ```
-./runTests.sh 
+php artisan test
 ```
 
 - Aqui temos a tela de login no qual você precisara de um usuário pra acessar:

@@ -1,1 +1,0 @@
-docker exec backend-whydigital php artisan test
