@@ -30,9 +30,7 @@ export const AuthProvider = ({ children }) => {
       api.defaults.headers.Authorization = `Bearer ${auth.token}`
       setLogged(true)
     } catch (e) {
-      Object.values(e.response.data).map((e) => {
-        return toast(JSON.stringify(e).replace('[', '').replace(']', ''))
-      })
+      toast('Login inválido')
     }
   }
 
