@@ -19,7 +19,7 @@ cp backend/.env.example backend/.env
 
 - Iremos rodar o composer install:
 ```
-cd backend ; composer install ; cd ..
+cd backend ; composer install --ignore-platform-reqs  ; cd ..
 ```
 
 - Vamos dar permissão ao comando sh e executa-lo para subir os containers :
